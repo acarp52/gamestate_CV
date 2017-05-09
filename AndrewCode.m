@@ -35,4 +35,20 @@ end
 
 thisBB = props(biggest_k).BoundingBox;
 
-rectangle('Position', [thisBB(1),thisBB(2),thisBB(3),thisBB(4)], 'EdgeColor','r','LineWidth',2 )
+rectangle('Position', [thisBB], 'EdgeColor','r','LineWidth',2 )
+
+m_x = zeros(1, 9);
+m_y = zeros(1, 9);
+for i = 1:9
+    m_x(i) = thisBB(1) + (i-1) * thisBB(3)/8;
+    m_y(i) = thisBB(2) + (i-1) * thisBB(4)/8;
+end
+
+for i = 1:8
+    for j = 1:8
+        pos = [m_x(i) m_y(j) thisBB(3)/8 thisBB(4)/8]
+        rectangle('Position', pos, 'EdgeColor','r','LineWidth', 1);
+    end
+end
+
+%sprintf('White pieces is: %d', whitePieces)
