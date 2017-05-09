@@ -1,14 +1,14 @@
 
 % Get pieces
-O4 = imread('othello/four.jpg');
+O4 = imread('othello/random.jpg');
 Ob = imread('othello/board.jpg');
 
 
 y = imresize(O4, [400 640]);
-[white_centers, white_radii] = imfindcircles(y,[20 50], 'EdgeThreshold', 0.5, 'Sensitivity', 0.8)
+[white_centers, white_radii] = imfindcircles(y,[20 50], 'Sensitivity', 0.8)
 
 z = imcomplement(y);
-[black_centers, black_radii] = imfindcircles(im2bw(z),[20 50], 'EdgeThreshold', 0.5, 'Sensitivity', 0.81)
+[black_centers, black_radii] = imfindcircles(im2bw(z),[20 50], 'EdgeThreshold', 0.35, 'Sensitivity', 0.81)
 
 
 imshow(y);
@@ -63,6 +63,8 @@ board = ['-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-']
 
+white_count = 0;
+black_count = 0;
 [w_rows, c] = size(white_centers);
 [b_rows, c] = size(black_centers);
 for i = 1:8
@@ -75,6 +77,7 @@ for i = 1:8
             if white_centers(w_row, 1) > m_x(i) && white_centers(w_row, 1) < m_x(i+1)
                 if white_centers(w_row, 2) > m_y(j) && white_centers(w_row, 2) < m_y(j+1)
                     board(j, i) = 'w';
+                    white_count = white_count + 1;
                 end
             end
         end
@@ -83,6 +86,7 @@ for i = 1:8
             if black_centers(b_row, 1) > m_x(i) && black_centers(b_row, 1) < m_x(i+1)
                 if black_centers(b_row, 2) > m_y(j) && black_centers(b_row, 2) < m_y(j+1)
                     board(j, i) = 'b';
+                    black_count = black_count + 1;
                 end
             end
         end
@@ -91,5 +95,12 @@ for i = 1:8
         end
 
 board
-%sprintf('White pieces is: %d', whitePieces)
-
+disp(sprintf('White pieces  = %d', white_count));
+disp(sprintf('Black pieces  = %d', black_count));
+if white_count > black_count
+    disp(sprintf('White is winning!'));
+elseif white_count < black_count
+    disp(sprintf('Black is winning!'));
+else
+    disp(sprintf('It is a tie game.'));
+end
