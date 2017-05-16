@@ -29,7 +29,7 @@ stats = stats(stats.Area > 10,:);
 median_area = median(stats.Area);
 
 % To pick out the pieces we want, look only at areas within 15% of the median
-stats_f = stats(stats.Area > (median_area - 0.15*median_area) & stats.Area < (0.15*median_area + median_area),:)
+stats_f = stats(stats.Area > (median_area - 0.15*median_area) & stats.Area < (0.15*median_area + median_area),:);
 
 
 b_pieces = stats_f(stats_f.MeanIntensity <= 175,:);
@@ -69,6 +69,7 @@ end
 thisBB = props(biggest_k).BoundingBox;
 
 rectangle('Position', [thisBB], 'EdgeColor','r','LineWidth',2 )
+pause;
 
 m_x = zeros(1, 9);
 m_y = zeros(1, 9);
