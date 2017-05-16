@@ -156,14 +156,23 @@ function Othello
         while endturn==0
             %Prompting player input
             try
-                [x,y]=ginput(1);
+                filename = uigetfile();
+                %[x,y]=ginput(1);
             catch
                 winner='n';
                 return
             end
-            row=9-ceil(y(1)-0.5);
-            col=ceil(x(1)-0.5);
+            %row=9-ceil(y(1)-0.5);
+            %col=ceil(x(1)-0.5);
             %Checking player input
+            oldmark = playermark; %Save the board state
+            [newmark, commark] = green_seg(filename); %Get new state
+            playermark = newmark;
+            
+            newmark = newmark - oldmark;
+            [row, col] = find(newmark == 1);
+            playermark(row, col) = 0;
+            
             [endturn,r,c]=evaluateposition(playermark,commark,row,col,'p');
             %Updating board
             if endturn>0

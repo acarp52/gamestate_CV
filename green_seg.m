@@ -1,6 +1,7 @@
+function [wboard, bboard] = green_seg(filename)
+
 % Get pieces
-O4 = imread('othello/DSC_2793.jpg');
-Ob = imread('othello/board.jpg');
+O4 = imread(filename);
 
 
 y = imresize(O4, [400 640]);
@@ -69,7 +70,6 @@ end
 thisBB = props(biggest_k).BoundingBox;
 
 rectangle('Position', [thisBB], 'EdgeColor','r','LineWidth',2 )
-pause;
 
 m_x = zeros(1, 9);
 m_y = zeros(1, 9);
@@ -87,6 +87,8 @@ for i = 1:8
 end
 
 % Map locations to bard states
+wboard = zeros(8);
+bboard = zeros(8);
 board = ['-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-';
@@ -95,7 +97,6 @@ board = ['-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-';
          '-' '-' '-' '-' '-' '-' '-' '-'];
-
 white_count = 0;
 black_count = 0;
 [w_rows, c] = size(w_centers);
@@ -109,6 +110,7 @@ for i = 1:8
         for w_row = 1:w_rows
             if w_centers(w_row, 1) > m_x(i) && w_centers(w_row, 1) < m_x(i+1)
                 if w_centers(w_row, 2) > m_y(j) && w_centers(w_row, 2) < m_y(j+1)
+                    wboard(j, i) = 1;
                     board(j, i) = 'w';
                     white_count = white_count + 1;
                 end
@@ -118,6 +120,7 @@ for i = 1:8
         for b_row = 1:b_rows
             if b_centers(b_row, 1) > m_x(i) && b_centers(b_row, 1) < m_x(i+1)
                 if b_centers(b_row, 2) > m_y(j) && b_centers(b_row, 2) < m_y(j+1)
+                    bboard(j, i) = 1;
                     board(j, i) = 'b';
                     black_count = black_count + 1;
                 end
@@ -125,7 +128,8 @@ for i = 1:8
         end
         
     end
-        end
+       
+end
 
 board
 disp(sprintf('White pieces  = %d', white_count));
@@ -136,4 +140,7 @@ elseif white_count < black_count
     disp(sprintf('Black is winning!'));
 else
     disp(sprintf('It is a tie game.'));
-end
+end 
+
+
+
