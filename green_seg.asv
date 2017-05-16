@@ -1,5 +1,5 @@
 % Get pieces
-O4 = imread('othello/DSC_2793.jpg');
+O4 = imread('othello/random.jpg');
 Ob = imread('othello/board.jpg');
 
 
