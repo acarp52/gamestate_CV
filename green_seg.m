@@ -45,7 +45,7 @@ w_centers = w_pieces.Centroid;
 w_diameters = mean([w_pieces.MajorAxisLength w_pieces.MinorAxisLength],2);
 w_radii = w_diameters/2;
 
-imshow(y);
+%imshow(y);
 w = viscircles(w_centers,w_radii,'Color','b');
 b = viscircles(b_centers,b_radii,'Color','y');
 

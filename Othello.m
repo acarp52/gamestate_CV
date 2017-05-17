@@ -170,7 +170,9 @@ function Othello
             playermark = newmark;
             
             newmark = newmark - oldmark;
+            
             [row, col] = find(newmark == 1);
+            
             playermark(row, col) = 0;
             
             [endturn,r,c]=evaluateposition(playermark,commark,row,col,'p');
